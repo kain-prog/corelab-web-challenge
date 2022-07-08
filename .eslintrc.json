@@ -27,8 +27,7 @@
             "tab"
         ],
         "linebreak-style": [
-            "error",
-            "unix"
+            0
         ],
         "quotes": [
             "error",
@@ -37,6 +36,9 @@
         "semi": [
             "error",
             "always"
+        ],
+        "react/react-in-jsx-scope": [
+            "off"
         ]
     }
 }
