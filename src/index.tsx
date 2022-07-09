@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { AuthContextProvider } from './contexts/AuthContext';
 import Home from './pages/Home/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import './styles/global.scss';
 
 const root = ReactDOM.createRoot(
@@ -14,7 +15,7 @@ root.render(
 		<AuthContextProvider >
 			<Header />
 			<Routes>
-				
+		
 				<Route path="/" element={<Home/>} />
 			</Routes>
 		</AuthContextProvider>
