@@ -28,7 +28,16 @@ export default function Home(){
 			<div className='container'>
 				<div className='row'>
 					<div className='col-md-4'>
-						<Card/>
+						<Card 
+							nome='LOGAN'
+							modelo='RENAULT'
+							descricao='Lorem ipsum dolor sit amet consectetur adipisicing elit.At deleniti, sed id error corporis ducimus.'
+							valor='37000'
+							cor='vermelho'
+							km='30000'
+							ano='2015'
+							btns='like'
+						/>
 					</div>
 				</div>
 			</div>
