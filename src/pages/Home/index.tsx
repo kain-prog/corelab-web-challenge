@@ -1,4 +1,6 @@
 import { useContext } from 'react';
+import Card from '../../components/Card';
+import Filter from '../../components/Filter';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Home(){
@@ -14,8 +16,23 @@ export default function Home(){
 	}
     
 	return(
-		<div>
+		<>
+			<div className='container'>
+				<div className='row'>
+					<input type="text" name="" id="" className='w-100 dark' />
+				</div>
+			</div>
 
-		</div>
+			<Filter/>
+
+			<div className='container'>
+				<div className='row'>
+					<div className='col-md-4'>
+						<Card/>
+					</div>
+				</div>
+			</div>
+		</>
+
 	);
 }
