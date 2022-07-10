@@ -1,9 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import Filter from '../../components/Filter';
 import { AuthContext } from '../../contexts/AuthContext';
+import { api } from '../../lib/api';
+import { IVehicle } from '../../types/Vehicle';
 
 export default function Home(){
+
+	const [ vehicles , setVehicles ] = useState([]);
 	
 	const { signInWithGoogle, signOut } = useContext(AuthContext);
 
@@ -14,12 +18,19 @@ export default function Home(){
 	async function logout(){
 		await signOut();
 	}
+
+	// Get Vehicles
+	useEffect(() => {
+		api.get('/vehicles')
+			.then(response => setVehicles(response.data));
+	},[]);
     
 	return(
 		<>
 			<div className='container'>
-				<div className='row'>
-					<input type="text" name="" id="" className='w-100 dark' />
+				<div className='row position-relative'>
+					<i className='bi bi-search position-absolute ms-1 my-2 w-auto'></i>
+					<input type='text' name='' id='' className='w-100 dark ps-5' />
 				</div>
 			</div>
 
@@ -27,18 +38,24 @@ export default function Home(){
 
 			<div className='container'>
 				<div className='row'>
-					<div className='col-md-4'>
-						<Card 
-							nome='LOGAN'
-							modelo='RENAULT'
-							descricao='Lorem ipsum dolor sit amet consectetur adipisicing elit.At deleniti, sed id error corporis ducimus.'
-							valor='37000'
-							cor='vermelho'
-							km='30000'
-							ano='2015'
-							btns='like'
-						/>
-					</div>
+
+					{vehicles.length !== 0 ? vehicles.map((vehicle: IVehicle) => (
+							
+						<div key={vehicle.id} className='col-md-4'>
+							<Card 
+								nome={vehicle.name}
+								modelo={vehicle.brand}
+								descricao={vehicle.description}
+								valor={vehicle.price}
+								cor={vehicle.color}
+								km='30000'
+								ano='2015'
+								btns={vehicle.user_id}
+							/>
+						</div>
+					)) : 'Nenhum veículo foi encontrado...'
+					}
+					
 				</div>
 			</div>
 		</>

@@ -6,7 +6,7 @@ type Card = {
 	nome: string;
 	modelo: string;
 	descricao: string;
-	valor: string;
+	valor: number;
 	cor: string;
 	km: string;
 	ano: string;
@@ -15,7 +15,7 @@ type Card = {
 
 export default function Card(card: Card){
 	return(
-		<div className='container-shadow-rounded'>
+		<div className='container-shadow-rounded my-3'>
 			<div className='bg-color'>
 				<p>{card.modelo}</p>
 
@@ -34,19 +34,19 @@ export default function Card(card: Card){
 				<Button type='submit'>VER MAIS</Button>
 				
 				<div className='row w-100 mb-3 details'>
-					<div className='col-6'>
+					<div className='col-6 my-2'>
 						<p className='font-weight-bold'>Valor</p>
 					</div>
 
-					<div className='col-6 text-end'>
+					<div className='col-6 text-end my-2'>
 						<p className='font-weight-bold'>{card.valor}</p>
 					</div>
 
-					<div className='col-6'>
+					<div className='col-6 my-2'>
 						<p className='font-weight-bold'>Cor</p>
 					</div>
 
-					<div className='col-6 text-end'>
+					<div className='col-6 text-end my-2'>
 						<p className='font-weight-bold'>{card.cor}</p>
 					</div>
 				</div>
