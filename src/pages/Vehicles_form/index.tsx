@@ -7,35 +7,51 @@ export default function VehiclesForm(){
 					<div className='col-md-6 my-3'>
 						<div className='d-flex flex-column'>
 							<label className='dark' htmlFor=''>NOME</label>
-							<input className='dark' type="text" name='' id='' />
+							<input className='dark' type='text' name='' id='' />
 						</div>
 					</div>
 
 					<div className='col-md-6 my-3'>
 						<div className='d-flex flex-column'>
 							<label className='dark' htmlFor=''>MODELO</label>
-							<input className='dark' type="text" name='' id='' />
+							<input className='dark' type='text' name='' id='' />
 						</div>
 					</div>
 
-					<div className='col-md-4 my-3'>
+					<div className='col-md-3 my-3'>
 						<div className='d-flex flex-column'>
 							<label className='dark' htmlFor=''>PREÇO</label>
-							<input className='dark' type="text" name='' id='' />
+							<input className='dark' type='text' name='' id='' />
 						</div>
 					</div>
 
-					<div className='col-md-4 my-3'>
+					<div className='col-md-3 my-3'>
 						<div className='d-flex flex-column'>
 							<label className='dark' htmlFor=''>COR</label>
-							<input className='dark' type="text" name='' id='' />
+							<select name='' id=''>
+								<option value='Preto'>Preto</option>
+								<option value='Branco'>Branco</option>
+								<option value='Prata'>Prata</option>
+								<option value='Vermelho'>Vermelho</option>
+								<option value='Azul'>Azul</option>
+								<option value='Amarelo'>Amarelo</option>
+								<option value='Verde'>Verde</option>
+								<option value='Marrom'>Marrom</option>
+							</select>
 						</div>
 					</div>
 
-					<div className='col-md-4 my-3'>
+					<div className='col-md-3 my-3'>
 						<div className='d-flex flex-column'>
 							<label className='dark' htmlFor=''>ANO</label>
-							<input className='dark' type="text" name='' id='' />
+							<input className='dark' type='text' name='' id='' />
+						</div>
+					</div>
+
+					<div className='col-md-3 my-3'>
+						<div className='d-flex flex-column'>
+							<label className='dark' htmlFor=''>KM RODADOS</label>
+							<input className='dark' type='text' name='' id='' />
 						</div>
 					</div>
 

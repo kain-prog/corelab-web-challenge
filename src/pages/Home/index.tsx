@@ -1,31 +1,20 @@
 import { useContext, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import Filter from '../../components/Filter';
-import { AuthContext } from '../../contexts/AuthContext';
-import { api } from '../../lib/api';
 import { IVehicle } from '../../types/Vehicle';
+import handleHome from './Hooks';
 
 export default function Home(){
 
-	const [ vehicles , setVehicles ] = useState([]);
+	const { currentVehicles, items, pagination, currentPage, allVehicles, setVehicles } = handleHome();
+
+	const filterColor = (filteredVehicle: IVehicle[]) => {
+		setVehicles(filteredVehicle);
+	};
+
 	
-	const { signInWithGoogle, signOut } = useContext(AuthContext);
-
-	async function login(){
-		await signInWithGoogle();
-	}
-
-	async function logout(){
-		await signOut();
-	}
-
-	// Get Vehicles
-	useEffect(() => {
-		api.get('/vehicles')
-			.then(response => setVehicles(response.data));
-	},[]);
-    
 	return(
+
 		<>
 			<div className='container'>
 				<div className='row position-relative'>
@@ -34,30 +23,51 @@ export default function Home(){
 				</div>
 			</div>
 
-			<Filter/>
+			<Filter testando={filterColor} vehiclesCompleted={allVehicles} />
 
 			<div className='container'>
-				<div className='row'>
+				<div className='row justify-content-center'>
 
-					{vehicles.length !== 0 ? vehicles.map((vehicle: IVehicle) => (
-							
+					{currentVehicles.length !== 0 ? currentVehicles.map((vehicle: IVehicle) => (
+								
 						<div key={vehicle.id} className='col-md-4'>
 							<Card 
-								nome={vehicle.name}
-								modelo={vehicle.brand}
-								descricao={vehicle.description}
-								valor={vehicle.price}
-								cor={vehicle.color}
-								km='30000'
-								ano='2015'
-								btns={vehicle.user_id}
+								id={vehicle.id}
+								name={vehicle.name}
+								brand={vehicle.brand}
+								description={vehicle.description}
+								price={vehicle.price}
+								color={vehicle.color}
+								plate={vehicle.plate}
+								year={vehicle.year}
+								km={vehicle.km}
+								user_id={vehicle.user_id}
+								btns={ 'like' }
 							/>
 						</div>
 					)) : 'Nenhum veículo foi encontrado...'
 					}
-					
+						
 				</div>
+
+				<div className='col-12 justify-content-center mt-4'>
+					<nav className='d-flex align-items-center text-center justify-content-center'>
+						<ul className='pagination'>
+							<li className='page-item'><a className='page-link text-dark cursor-pointer' onClick={() => pagination(currentPage - 1)}>Voltar</a></li>
+							
+							{
+								items.map(item => (
+									<li key={item} className='page-item'><a onClick={() => pagination(item)} className='page-link text-dark cursor-pointer'>{item}</a></li>
+								))
+							}
+
+							<li className='page-item '><a className='page-link text-dark cursor-pointer' onClick={() => pagination(currentPage + 1)}>Avançar</a></li>
+						</ul>
+					</nav>
+				</div>
+
 			</div>
+
 		</>
 
 	);
