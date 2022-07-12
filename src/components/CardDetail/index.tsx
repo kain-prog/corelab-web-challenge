@@ -1,11 +1,30 @@
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+import { createFavorite } from '../../lib/api';
 import { IVehicle } from '../../types/Vehicle';
 import BtnRounded from '../Button_rounded';
+import setColor from '../Card/Hook';
 import '../CardDetail/index.scss';
 
 export default function CardDetail(card: IVehicle){
+
+	const [ bgColor, setBgColor ] = useState<string>();
+
+	const { user } = useContext(AuthContext);
+
+	useEffect(() => {
+		const result = setColor(card.color);
+		setBgColor(result);
+	},[card.color]);
+
+
+	function handleFavoriteVehicle(vehicle:number){
+		createFavorite(user?.id, vehicle);
+	}
+
 	return(
 		<div className='container-shadow-rounded my-3 pb-2'>
-			<div className='bg-color m-0 px-4 d-flex justify-content-between '>
+			<div className='bg-color m-0 px-4 d-flex justify-content-between' style={{background: `linear-gradient(30deg, rgba(${bgColor}),  rgba(${bgColor}))`}} >
 
 				<div className='text-center align-items-center justify-content-center d-flex'>
 					<h5 className='m-0 me-2 fs-6'>NOME :</h5>
@@ -19,7 +38,7 @@ export default function CardDetail(card: IVehicle){
 
 				<div className='text-center align-items-center justify-content-center d-flex'>
 					<h5 className='m-0 me-2 fs-6'>VALOR :</h5>
-					<p>{card.price}</p>
+					<p>R${card.price}</p>
 				</div>
 
 			</div>
@@ -56,7 +75,7 @@ export default function CardDetail(card: IVehicle){
 					<div className=' d-flex justify-content-end'>
 						{
 							card.btns === 'like' ?
-								<BtnRounded ><i className='bi bi-heart fs-4'></i></BtnRounded>
+								<BtnRounded onClick={() => handleFavoriteVehicle(card.id)}><i className='bi bi-heart fs-4'></i></BtnRounded>
 								: <>
 									<BtnRounded><i className='bi bi-pencil'></i></BtnRounded>
 									<BtnRounded><i className='bi bi-trash'></i></BtnRounded>

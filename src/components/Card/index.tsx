@@ -50,7 +50,7 @@ export default function Card(card: IVehicle){
 					</div>
 
 					<div className='col-6 text-end my-2'>
-						<p className='font-weight-bold'>{card.price}</p>
+						<p className='font-weight-bold'>R$ {card.price}</p>
 					</div>
 
 					<div className='col-6 my-2'>

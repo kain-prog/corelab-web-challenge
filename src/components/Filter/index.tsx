@@ -72,9 +72,9 @@ export default function Filter(props: any){
 					</div>
 				</div>
 				<div className='row'>
-					<div className='col-12 d-flex justify-content-between'>
+					<div className='mt-4 col-12 d-flex justify-content-between'>
 						<p>50 resultados</p>
-						<p>Limpar.</p>
+						<button className='btn btn-outline-light'>Limpar</button>
 					</div>
 				</div>
 			</div>

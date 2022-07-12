@@ -14,9 +14,14 @@ export async function getVehicles(){
 	}	
 }
 
-// export async function getFavorite(){
+export async function getFavoriteById(user_id: string | undefined){
 
-// }	
+	if(user_id !== undefined){
+		const {data} = await api.get(`/favorites/${user_id}`);
+		return data;
+	}
+
+}	
 
 export async function createFavorite(user_id: string | undefined, vehicle_id: number){
 
@@ -28,4 +33,12 @@ export async function createFavorite(user_id: string | undefined, vehicle_id: nu
 	if(favorite.user_id !== undefined){
 		await api.post('/favorites', favorite);
 	}
+}
+
+export async function getVehicleById(vehicle_id: number){
+
+	const {data} = await api.get(`/vehicles/${vehicle_id}`);
+
+	return data;
+
 }
