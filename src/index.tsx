@@ -20,7 +20,11 @@ root.render(
 			<Header />
 			<Routes>
 				<Route path='/' element={<Home/>} />
-				<Route path='/car-form/:vehicle_id' element={<VehiclesForm />} />
+
+				<Route path='/vehicle-form' element={<VehiclesForm />}> 
+					<Route path='/vehicle-form/:vehicle_id' element={<VehiclesForm />} />
+				</Route>
+
 				<Route path='/favorite/:user_id' element={<Favorites />} />
 				<Route path='/details/:vehicle_id' element={<Vehicles_id/>} />
 				<Route path='/adverts/:user_id' element={<Adverts />} />

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import swal from 'sweetalert';
 import { AuthContext } from '../../contexts/AuthContext';
 import { createFavorite } from '../../lib/api';
 import { IVehicle } from '../../types/Vehicle';
@@ -10,7 +11,7 @@ export default function CardDetail(card: IVehicle){
 
 	const [ bgColor, setBgColor ] = useState<string>();
 
-	const { user } = useContext(AuthContext);
+	const { user, signInWithGoogle } = useContext(AuthContext);
 
 	useEffect(() => {
 		const result = setColor(card.color);
@@ -18,8 +19,26 @@ export default function CardDetail(card: IVehicle){
 	},[card.color]);
 
 
-	function handleFavoriteVehicle(vehicle:number){
-		createFavorite(user?.id, vehicle);
+	async function handleFavoriteVehicle(vehicle:number){
+		if(user?.id !== undefined){
+			createFavorite(user?.id, vehicle);
+			swal({
+				title: 'Favoritado com sucesso!',
+				icon: 'success',
+				timer: 3000,
+			});
+		}else{
+
+			await signInWithGoogle();
+			if(user?.id !== undefined){
+				createFavorite(user?.id, vehicle);
+				swal({
+					title: 'Favoritado com sucesso!',
+					icon: 'success',
+					timer: 3000,
+				});
+			}
+		}
 	}
 
 	return(

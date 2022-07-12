@@ -1,34 +1,29 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Carousel } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import Card from '../../components/Card';
 import Title from '../../components/Title';
-import { AuthContext } from '../../contexts/AuthContext';
-import { getVehicles } from '../../lib/api';
+import { getVehicleByUserId } from '../../lib/api';
 import { IVehicle } from '../../types/Vehicle';
 
 export default function Adverts(){
 
-	const [ vehicles, setVehicles ] = useState([]);
-
-	const { signInWithGoogle, signOut } = useContext(AuthContext);
-
-	async function login(){
-		await signInWithGoogle();
-	}
-
-	async function logout(){
-		await signOut();
-	}
-
+	const [ vehicles, setVehicles ] = useState<IVehicle[]>();
+	
+	const { user_id } = useParams();
+	
 	// Get Vehicles
 	async function getAllVehicles() {
-		const res = await getVehicles();
+		console.log('USER ID : ',user_id);
+		const res = await getVehicleByUserId(user_id);
+		console.log('RES : ',res);
 		setVehicles(res);
 	}
-
+	
 	useEffect(() => {
 		getAllVehicles();
-	});
+	},[user_id]);
+	
 
 
 	return(
@@ -39,7 +34,7 @@ export default function Adverts(){
 
 			<div className='mt-5 w-100'>
 				<Carousel variant='dark'>
-					{vehicles.length !== 0 ? vehicles.map((vehicle: IVehicle) => (
+					{vehicles?.length !== 0 ? vehicles?.map((vehicle: IVehicle) => (
 
 						<Carousel.Item key={vehicle.id}>
 						
@@ -60,7 +55,7 @@ export default function Adverts(){
 							</div>
 
 						</Carousel.Item>
-					)) : 'Nenhum veículo foi encontrado...'
+					)) : ''
 					}
 					
 					

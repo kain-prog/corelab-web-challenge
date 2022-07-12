@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import loginImg from '../../assets/kain perfil 2 branco azul.jpeg';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
-import { IUser } from '../../types/User';
+import Button from '../Button_primary/index';
 import './index.scss';
 
 export default function Header(){
@@ -31,22 +30,42 @@ export default function Header(){
 					<div className=''>
 						<ul className='nav d-flex'>
 							<li className='nav-item'><NavLink className='nav-link text-dark' to='/'>Home</NavLink></li>
-							<li className='nav-item'><NavLink className='nav-link text-dark' to={`/favorite/${user?.id}`}> Meus Favoritos </NavLink></li> 
-							<li className='nav-item'><NavLink className='nav-link text-dark' to={`/adverts/${user?.id}`}> Meus Anúncios</NavLink></li>
+							
+							{
+								user?.id ? 
+									<>
+										<li className='nav-item'><NavLink className='nav-link text-dark' to={`/favorite/${user?.id}`}> Meus Favoritos </NavLink></li> 
+										<li className='nav-item'><NavLink className='nav-link text-dark' to={`/adverts/${user?.id}`}> Meus Anúncios</NavLink></li>
+										<li className='nav-item'><NavLink className='nav-link text-dark' to={'/vehicle-form'}><i className='bi bi-plus-square me-1'></i> Criar Anúncio </NavLink></li>
+										<li onClick={logout} className='nav-item'><p className='nav-link text-dark cursor-pointer'> Logout </p> </li> 
+									</>
+									: 
+									<>
+										<li onClick={login} className='nav-item'><p className='nav-link text-dark cursor-pointer'> Meus Favoritos </p></li> 
+										<li onClick={login} className='nav-item'><p className='nav-link text-dark cursor-pointer'> Meus Anúncios</p></li>
+										<li onClick={login} className='nav-item'><p className='nav-link text-dark cursor-pointer'><i className='bi bi-plus-square me-1'></i> Criar Anúncio </p></li>
+
+									</>
+							}
 						</ul>
 						
 					</div>
 
-					<div className='d-flex align-items-center justify-content-center'>
-						{user !== undefined ? (
-							<>
+					
+					{user?.id !== undefined ? (
+						<>
+							<div className='d-flex align-items-center justify-content-center'>
 								<p className='pe-3 lead fs-6'> {user?.name}</p>
 								<img className='rounded-circle image-size' src={user?.avatar} alt='#' />
-							</>
-						) : 
-							<button onClick={login}>login</button>	
-						}
-					</div>
+							</div>
+								
+						</>
+					) : 
+						<div>
+							<Button onClick={login}>Login</Button>
+						</div>
+								
+					}
 							
 				</div>
 			</div>

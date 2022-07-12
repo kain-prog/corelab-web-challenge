@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
 import { AuthContext } from '../../contexts/AuthContext';
-import { createFavorite } from '../../lib/api';
+import { createFavorite, deleteVehicle } from '../../lib/api';
 import { IVehicle } from '../../types/Vehicle';
 import Button from '../Button_primary';
 import BtnRounded from '../Button_rounded';
@@ -12,15 +13,48 @@ export default function Card(card: IVehicle){
 
 	const [ bgColor, setBgColor ] = useState<string>();
 
-	const { user } = useContext(AuthContext);
+	const { user, signInWithGoogle} = useContext(AuthContext);
 
 	useEffect(() => {
 		const result = setColor(card.color);
 		setBgColor(result);
 	},[card.color]);
 
-	function handleFavoriteVehicle(vehicle:number){
-		createFavorite(user?.id, vehicle);
+	async function handleFavoriteVehicle(vehicle:number){
+
+		if(user?.id !== undefined){
+			createFavorite(user?.id, vehicle);
+			swal({
+				title: 'Favoritado com sucesso!',
+				icon: 'success',
+				timer: 3000,
+			});
+		}else{
+
+			await signInWithGoogle();
+			if(user?.id !== undefined){
+				createFavorite(user?.id, vehicle);
+				swal({
+					title: 'Favoritado com sucesso!',
+					icon: 'success',
+					timer: 3000,
+				});
+			}
+		}
+	}
+
+	function destroyVehicle(vehicle:number){
+		deleteVehicle(vehicle);
+		swal({
+			title: 'Deletado com sucesso!',
+			icon: 'success',
+			timer: 3000,
+		});
+
+		setTimeout(()=> {
+			window.location.reload();
+		},1400);
+
 	}
 
 	const navigate = useNavigate();
@@ -84,8 +118,8 @@ export default function Card(card: IVehicle){
 						card.btns === 'like' ?
 							<BtnRounded onClick={() => handleFavoriteVehicle(card.id)}><i className='bi bi-heart fs-4'></i></BtnRounded>
 							: <>
-								<BtnRounded><i className='bi bi-pencil'></i></BtnRounded>
-								<BtnRounded><i className='bi bi-trash'></i></BtnRounded>
+								<BtnRounded onClick={() => navigate(`/vehicle-form/${card.id}`)} ><i className='bi bi-pencil'></i></BtnRounded>
+								<BtnRounded onClick={() => destroyVehicle(card.id)} ><i className='bi bi-trash'></i></BtnRounded>
 							</>
 					}
 				</div>
